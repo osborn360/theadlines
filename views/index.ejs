@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+        <title>Theadlines</title>
+        <link href="/bootstrap.min.css" rel="stylesheet">
+
+    </head>
+    
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Bokor&display=swap');
+
+    * {
+        font-family: 'PT Sans', sans-serif !important;
+    }
+      
+
+    a {
+        color: inherit;
+    }
+
+    #logo {
+        font-family: 'Bokor', cursive !important;
+        font-size: 80px;
+        text-align: center;
+        padding: 20px 0px 0px 0px;
+    }
+
+    #slogan {
+        word-spacing: 2px;
+        letter-spacing: 1px;
+        font-size: small;
+        text-align: center;
+        margin-top: -30px;
+        padding-bottom: 50px;
+    }
+
+    section {
+        padding: 30px 0px;
+        border-radius: 4px !important;
+    }
+
+    footer {
+        padding: 60px 0px 60px 0px;
+        word-spacing: 2px;
+        letter-spacing: 1px;
+        text-align: right;
+        text-decoration: dashed;
+        font-size: x-small;
+        
+    }
+
+    .btn {
+        border-radius: 3px !important;
+        font-size: small;
+    }
+
+
+    ul {
+        font-size: small;
+    }
+
+    .card-title {
+        line-height: 1.1;
+    }
+
+    .card-text {
+        line-height: 1.4;
+    }
+	
+
+    .card-text {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+
+    /* Media Query for Mobile Devices */
+    @media (max-width: 480px) {
+        #logo {
+            font-size: 70px;
+        }
+        
+        nav {
+
+            font-size: 12px;
+
+        }
+	    
+    } 
+
+   
+</style>
+
+    <body class="container">
+        <p>
+            <p id="logo">Theadlines</p>
+            <p class="text-uppercase text-muted" id="slogan">Daily news headlines</p>
+        </p>
+
+        </br>
+        <ul class="nav nav-tabs justify-content-center">
+           <li class="nav-item">
+              <a class="nav-link active" data-toggle="tab" href="#xworld">World</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#xsports">Sports</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#xtech">Tech</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#xentertainment">Entertainment</a>
+            </li>
+           
+        </ul>
+        <section id="myTabContent" class="tab-content">
+            <div class="tab-pane fade active show" id="xworld">
+                <div id="world" class="card-columns"></div>
+            </div>
+            <div class="tab-pane fade" id="xsports">
+                <div id="sports" class="card-columns"></div>
+            </div>
+            <div class="tab-pane fade" id="xtech">
+                <div id="tech"  class="card-columns"></div>
+            </div>
+            <div class="tab-pane fade" id="xentertainment">
+                <div id="entertainment" class="card-columns"></div>
+            </div>
+        </section>
+       
+    </body></br>
+    </div>
+    <footer>
+        <p class="text-uppercase text-muted">API by <a href="https://newsapi.org/" target="_blank"><strong>Newsapi.org</strong><a></p>
+    </footer>
+</html>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.slim.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>
+
+<script>
+const world = document.querySelector("#world");
+const sports = document.querySelector("#sports");
+const tech = document.querySelector("#tech");
+const entertainment = document.querySelector("#entertainment");
+
+let wnews
+let snews
+let tnews
+let enews 
+
+
+const getData = async () => {
+    await axios.get('/world')
+    .then(res => {
+        wnews = res.data;
+	    Array.from(wnews).forEach(x => {  
+            let showlx = document.createElement("div");
+            showlx.innerHTML = `      
+            <div class="card mb-3" style="" id="check">
+                <img src="${x.urlToImage}" class="card-img-top" alt="" id="cimage"/>
+                <div class="card-body">
+                    <b><small>${x.publishedAt}</small></b>
+                    <h5 class="card-title"><b>${x.title}</b></h5>
+                    <p class="card-text">${x.description}....</p>
+                    <a href="${x.url}" class="btn btn-primary" target="_blank"><strong>Read More</strong></a>
+                </div>
+            </div>
+            </br>
+            `
+            world.appendChild(showlx);
+            
+    	})
+    })
+	.catch(err => console.error(err));
+
+
+    await axios.get('/sports')
+    .then(res => {
+        snews = res.data;
+	 Array.from(snews).forEach(x => {    
+            let showlx = document.createElement("div");
+            showlx.innerHTML = `      
+            <div class="card mb-3" style="" id="check">
+                <img src="${x.urlToImage}" class="card-img-top" alt="" id="cimage"/>
+                <div class="card-body">
+                    <b><small>${x.publishedAt}</small></b>
+                    <h5 class="card-title"><b>${x.title}</b></h5>
+                    <p class="card-text">${x.description}....</p>
+                    <a href="${x.url}" class="btn btn-primary" target="_blank"><strong>Read More</strong></a>
+                </div>
+            </div>
+            </br>
+            `
+            sports.appendChild(showlx);
+    	})
+    })
+	.catch(err => console.error(err));
+
+
+   await axios.get('/tech')
+    .then(res => {
+        tnews = res.data;
+	 Array.from(tnews).forEach(x => {    
+            let showlx = document.createElement("div");
+            showlx.innerHTML = `      
+            <div class="card mb-3" style="" id="check">
+                <img src="${x.urlToImage}" class="card-img-top" alt="" id="cimage"/>
+                <div class="card-body">
+                    <b><small>${x.publishedAt}</small></b>
+                    <h5 class="card-title"><b>${x.title}</b></h5>
+                    <p class="card-text">${x.description}....</p>
+                    <a href="${x.url}" class="btn btn-primary" target="_blank"><strong>Read More</strong></a>
+                </div>
+            </div>
+            </br>
+            `
+            tech.appendChild(showlx);
+   	})
+   })
+	.catch(err => console.error(err));
+
+
+    await axios.get('/entertainment')
+    .then(res => {
+        enews = res.data;
+	 Array.from(enews).forEach(x => {    
+            let showlx = document.createElement("div");
+            showlx.innerHTML = `      
+            <div class="card mb-3" style="" id="check">
+                <img src="${x.urlToImage}" class="card-img-top" alt="" id="cimage"/>
+                <div class="card-body">
+                    <b><small>${x.publishedAt}</small></b>
+                    <h5 class="card-title"><b>${x.title}</b></h5>
+                    <p class="card-text">${x.description}....</p>
+                    <a href="${x.url}" class="btn btn-primary" target="_blank"><strong>Read More</strong></a>
+                </div>
+            </div>
+            </br>
+            `
+            entertainment.appendChild(showlx);
+    	})
+    })
+	.catch(err => console.error(err));    
+}
+
+
+
+getData()
+	
+
+
+</script>
